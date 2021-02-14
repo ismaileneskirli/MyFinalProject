@@ -4,17 +4,10 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace DataAccess.Abstract
-{
-    public interface IProductDal //Dal stands for Data access Layer.
+{    //Dal stands for Data access Layer.
+    // IProductDal is a IEntityRepository structured with Product class/table 
+    public interface IProductDal:IEntityRepository<Product>
     {
-        List<Product> GetAll();
 
-        void Add(Product product);
-
-        void Update(Product product);
-
-        void Delete(Product product);
-
-        List<Product> GetAllByCategory(int categoryID); //Filtering categories
     }
 }

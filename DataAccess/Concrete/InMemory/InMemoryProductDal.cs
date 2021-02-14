@@ -3,6 +3,7 @@ using Entitites.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace DataAccess.Concrete.InMemory
@@ -15,10 +16,10 @@ namespace DataAccess.Concrete.InMemory
             // Simulate data access.
             _products = new List<Product>
             {
-                new Product{ProductID=1, CategoryID=1,ProductName="Glass",UnitPrice=15,UnitsInStock=15},
-                new Product{ProductID=1, CategoryID=1,ProductName="Phone",UnitPrice=1000,UnitsInStock=3},
-                new Product{ProductID=1, CategoryID=1,ProductName="Mac",UnitPrice=1500,UnitsInStock=5},
-                new Product{ProductID=1, CategoryID=1,ProductName="Pen",UnitPrice=25,UnitsInStock=100}
+                new Product{ProductId=1, CategoryId=1,ProductName="Glass",UnitPrice=15,UnitsInStock=15},
+                new Product{ProductId=1, CategoryId=1,ProductName="Phone",UnitPrice=1000,UnitsInStock=3},
+                new Product{ProductId=1, CategoryId=1,ProductName="Mac",UnitPrice=1500,UnitsInStock=5},
+                new Product{ProductId=1, CategoryId=1,ProductName="Pen",UnitPrice=25,UnitsInStock=100}
             };
         }
         public void Add(Product product)
@@ -32,8 +33,13 @@ namespace DataAccess.Concrete.InMemory
             Product productToDelete = null;
             //instead of iterate through list with loop use it. It means for each p in _product list
             //look if id equals product id in the parameter. Singleordefault means foreach.
-            productToDelete = _products.SingleOrDefault(p => p.ProductID == product.ProductID);
+            productToDelete = _products.SingleOrDefault(p => p.ProductId == product.ProductId);
             _products.Remove(productToDelete);
+        }
+
+        public Product Get(Expression<Func<Product, bool>> filter)
+        {
+            throw new NotImplementedException();
         }
 
         public List<Product> GetAll()
@@ -41,16 +47,21 @@ namespace DataAccess.Concrete.InMemory
             return _products;
         }
 
+        public List<Product> GetAll(Expression<Func<Product, bool>> filter = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Product> GetAllByCategory(int categoryID)
         {
             // Where function returns all the objects that meets the if condition.
-            return _products.Where(p => p.CategoryID == categoryID).ToList();
+            return _products.Where(p => p.CategoryId == categoryID).ToList();
         }
 
         public void Update(Product product)
         {
             //Find the product, now productToUpdate referencing the product in the list(memory db)
-            Product productToUpdate = _products.SingleOrDefault(p => p.ProductID == product.ProductID);
+            Product productToUpdate = _products.SingleOrDefault(p => p.ProductId == product.ProductId);
             productToUpdate.UnitPrice = product.UnitPrice;
             productToUpdate.UnitsInStock = product.UnitsInStock;
 
